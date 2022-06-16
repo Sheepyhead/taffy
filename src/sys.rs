@@ -28,6 +28,7 @@ mod std {
 
     /// Creates a new map with the capacity for the specified number of items before it must be resized
     #[must_use]
+    #[inline]
     pub(crate) fn new_map_with_capacity<K, V>(capacity: usize) -> Map<K, V>
     where
         K: Eq + std::hash::Hash,
@@ -37,18 +38,21 @@ mod std {
 
     /// Creates a new vector with the capacity for the specified number of items before it must be resized    
     #[must_use]
+    #[inline]
     pub(crate) fn new_vec_with_capacity<A>(capacity: usize) -> Vec<A> {
         Vec::with_capacity(capacity)
     }
 
     /// Rounds to the nearest whole number
     #[must_use]
+    #[inline]
     pub(crate) fn round(value: f32) -> f32 {
         value.round()
     }
 
     /// Computes the absolute value
     #[must_use]
+    #[inline]
     pub(crate) fn abs(value: f32) -> f32 {
         value.abs()
     }
@@ -72,24 +76,28 @@ mod alloc {
 
     /// Creates a new map with the capacity for the specified number of items before it must be resized
     #[must_use]
+    #[inline]
     pub(crate) fn new_map_with_capacity<K, V>(capacity: usize) -> Map<K, V> {
         Map::with_capacity(capacity)
     }
 
     /// Creates a new vector with the capacity for the specified number of items before it must be resized
     #[must_use]
+    #[inline]
     pub(crate) fn new_vec_with_capacity<A>(capacity: usize) -> Vec<A> {
         Vec::with_capacity(capacity)
     }
 
     /// Rounds to the nearest whole number
     #[must_use]
+    #[inline]
     pub(crate) fn round(value: f32) -> f32 {
         num_traits::float::FloatCore::round(value)
     }
 
     /// Computes the absolute value
     #[must_use]
+    #[inline]
     pub(crate) fn abs(value: f32) -> f32 {
         num_traits::float::FloatCore::abs(value)
     }
@@ -118,6 +126,7 @@ mod core {
     ///
     /// This map cannot be resized.
     #[must_use]
+    #[inline]
     pub(crate) fn new_map_with_capacity<K, V>(_capacity: usize) -> Map<K, V>
     where
         K: Eq + ::hash32::Hash,
@@ -129,6 +138,7 @@ mod core {
     ///
     /// This vector cannot be resized.
     #[must_use]
+    #[inline]
     pub(crate) fn new_vec_with_capacity<A, const CAP: usize>(_capacity: usize) -> arrayvec::ArrayVec<A, CAP> {
         arrayvec::ArrayVec::new()
     }

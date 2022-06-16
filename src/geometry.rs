@@ -44,6 +44,7 @@ impl<T> Rect<T> {
     /// When applied to the left and right sides, the width is used
     /// as the second parameter of `f`.
     /// When applied to the top or bottom sides, the height is used instead.
+    #[inline]
     pub(crate) fn zip_size<R, F, U>(self, size: Size<U>, f: F) -> Rect<R>
     where
         F: Fn(T, U) -> R,
@@ -67,6 +68,7 @@ where
     /// This is typically used when computing total padding.
     ///
     /// **NOTE:** this is *not* the width of the rectangle.
+    #[inline]
     pub(crate) fn horizontal_axis_sum(&self) -> T {
         self.start + self.end
     }
@@ -76,6 +78,7 @@ where
     /// This is typically used when computing total padding.
     ///
     /// **NOTE:** this is *not* the height of the rectangle.
+    #[inline]
     pub(crate) fn vertical_axis_sum(&self) -> T {
         self.top + self.bottom
     }
@@ -86,6 +89,7 @@ where
     ///
     /// If the [`FlexDirection`] is [`FlexDirection::Row`] or [`FlexDirection::RowReverse`], this is [`Rect::horizontal`].
     /// Otherwise, this is [`Rect::vertical`].
+    #[inline]
     pub(crate) fn main_axis_sum(&self, direction: FlexDirection) -> T {
         if direction.is_row() {
             self.horizontal_axis_sum()
@@ -98,6 +102,7 @@ where
     ///
     /// If the [`FlexDirection`] is [`FlexDirection::Row`] or [`FlexDirection::RowReverse`], this is [`Rect::vertical`].
     /// Otherwise, this is [`Rect::horizontal`].
+    #[inline]
     pub(crate) fn cross_axis_sum(&self, direction: FlexDirection) -> T {
         if direction.is_row() {
             self.vertical_axis_sum()
@@ -112,6 +117,7 @@ where
     T: Copy + Clone,
 {
     /// The `start` or `top` value of the [`Rect`], from the perspective of the main layout axis
+    #[inline]
     pub(crate) fn main_start(&self, direction: FlexDirection) -> T {
         if direction.is_row() {
             self.start
@@ -121,6 +127,7 @@ where
     }
 
     /// The `end` or `bottom` value of the [`Rect`], from the perspective of the main layout axis
+    #[inline]
     pub(crate) fn main_end(&self, direction: FlexDirection) -> T {
         if direction.is_row() {
             self.end
@@ -130,6 +137,7 @@ where
     }
 
     /// The `start` or `top` value of the [`Rect`], from the perspective of the cross layout axis
+    #[inline]
     pub(crate) fn cross_start(&self, direction: FlexDirection) -> T {
         if direction.is_row() {
             self.top
@@ -139,6 +147,7 @@ where
     }
 
     /// The `end` or `bottom` value of the [`Rect`], from the perspective of the main layout axis
+    #[inline]
     pub(crate) fn cross_end(&self, direction: FlexDirection) -> T {
         if direction.is_row() {
             self.bottom
@@ -181,6 +190,7 @@ impl<T> Size<T> {
     /// Sets the extent of the main layout axis
     ///
     /// Whether this is the width or height depends on the `direction` provided
+    #[inline]
     pub(crate) fn set_main(&mut self, direction: FlexDirection, value: T) {
         if direction.is_row() {
             self.width = value
@@ -192,6 +202,7 @@ impl<T> Size<T> {
     /// Sets the extent of the cross layout axis
     ///
     /// Whether this is the width or height depends on the `direction` provided
+    #[inline]
     pub(crate) fn set_cross(&mut self, direction: FlexDirection, value: T) {
         if direction.is_row() {
             self.height = value
@@ -203,6 +214,7 @@ impl<T> Size<T> {
     /// Gets the extent of the main layout axis
     ///
     /// Whether this is the width or height depends on the `direction` provided
+    #[inline]
     pub(crate) fn main(self, direction: FlexDirection) -> T {
         if direction.is_row() {
             self.width
@@ -214,6 +226,7 @@ impl<T> Size<T> {
     /// Gets the extent of the cross layout axis
     ///
     /// Whether this is the width or height depends on the `direction` provided
+    #[inline]
     pub(crate) fn cross(self, direction: FlexDirection) -> T {
         if direction.is_row() {
             self.height
@@ -233,6 +246,7 @@ impl Size<f32> {
 
 impl Size<Dimension> {
     /// Converts any `parent`-relative values for size into an absolute size
+    #[inline]
     pub(crate) fn resolve(&self, parent: Size<Option<f32>>) -> Size<Option<f32>> {
         Size { width: self.width.resolve(parent.width), height: self.height.resolve(parent.height) }
     }

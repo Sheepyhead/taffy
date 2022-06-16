@@ -19,6 +19,7 @@ pub(crate) trait MaybeMath<In, Out> {
 }
 
 impl MaybeMath<Option<f32>, Option<f32>> for Option<f32> {
+    #[inline]
     fn maybe_min(self, rhs: Option<f32>) -> Option<f32> {
         match (self, rhs) {
             (Some(l), Some(r)) => Some(l.min(r)),
@@ -28,6 +29,7 @@ impl MaybeMath<Option<f32>, Option<f32>> for Option<f32> {
         }
     }
 
+    #[inline]
     fn maybe_max(self, rhs: Option<f32>) -> Option<f32> {
         match (self, rhs) {
             (Some(l), Some(r)) => Some(l.max(r)),
@@ -37,6 +39,7 @@ impl MaybeMath<Option<f32>, Option<f32>> for Option<f32> {
         }
     }
 
+    #[inline]
     fn maybe_add(self, rhs: Option<f32>) -> Option<f32> {
         match (self, rhs) {
             (Some(l), Some(r)) => Some(l + r),
@@ -46,6 +49,7 @@ impl MaybeMath<Option<f32>, Option<f32>> for Option<f32> {
         }
     }
 
+    #[inline]
     fn maybe_sub(self, rhs: Option<f32>) -> Option<f32> {
         match (self, rhs) {
             (Some(l), Some(r)) => Some(l - r),
@@ -57,24 +61,29 @@ impl MaybeMath<Option<f32>, Option<f32>> for Option<f32> {
 }
 
 impl MaybeMath<f32, Option<f32>> for Option<f32> {
+    #[inline]
     fn maybe_min(self, rhs: f32) -> Option<f32> {
         self.map(|val| val.min(rhs))
     }
 
+    #[inline]
     fn maybe_max(self, rhs: f32) -> Option<f32> {
         self.map(|val| val.max(rhs))
     }
 
+    #[inline]
     fn maybe_add(self, rhs: f32) -> Option<f32> {
         self.map(|val| val + rhs)
     }
 
+    #[inline]
     fn maybe_sub(self, rhs: f32) -> Option<f32> {
         self.map(|val| val - rhs)
     }
 }
 
 impl MaybeMath<Option<f32>, f32> for f32 {
+    #[inline]
     fn maybe_min(self, rhs: Option<f32>) -> f32 {
         match rhs {
             Some(val) => self.min(val),
@@ -82,6 +91,7 @@ impl MaybeMath<Option<f32>, f32> for f32 {
         }
     }
 
+    #[inline]
     fn maybe_max(self, rhs: Option<f32>) -> f32 {
         match rhs {
             Some(val) => self.max(val),
@@ -89,6 +99,7 @@ impl MaybeMath<Option<f32>, f32> for f32 {
         }
     }
 
+    #[inline]
     fn maybe_add(self, rhs: Option<f32>) -> f32 {
         match rhs {
             Some(val) => self + val,
@@ -96,6 +107,7 @@ impl MaybeMath<Option<f32>, f32> for f32 {
         }
     }
 
+    #[inline]
     fn maybe_sub(self, rhs: Option<f32>) -> f32 {
         match rhs {
             Some(val) => self - val,

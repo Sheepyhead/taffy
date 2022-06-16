@@ -28,6 +28,7 @@ pub(crate) struct NodeData {
 impl NodeData {
     /// Create the data for a new leaf node
     #[must_use]
+    #[inline]
     fn new_leaf(style: FlexboxLayout, measure: MeasureFunc) -> Self {
         Self {
             style,
@@ -42,6 +43,7 @@ impl NodeData {
     /// Create the data for a new node
     // TODO: why is this different from new_leaf?
     #[must_use]
+    #[inline]
     fn new(style: FlexboxLayout) -> Self {
         Self {
             style,
@@ -81,6 +83,7 @@ pub(crate) struct Forest {
 impl Forest {
     /// Creates a new [`Forest`] that can store up to `capacity` [`Nodes`](crate::node::Node) before needing to be expanded
     #[must_use]
+    #[inline]
     pub(crate) fn with_capacity(capacity: usize) -> Self {
         Self {
             nodes: new_vec_with_capacity(capacity),
@@ -90,6 +93,7 @@ impl Forest {
     }
 
     /// Adds a new unattached leaf node to the forest, and returns the [`NodeId`] of the new node
+    #[inline]
     pub(crate) fn new_leaf(&mut self, style: FlexboxLayout, measure: MeasureFunc) -> NodeId {
         let id = self.nodes.len();
         self.nodes.push(NodeData::new_leaf(style, measure));
@@ -99,6 +103,7 @@ impl Forest {
     }
 
     /// Adds a new unparented node to the forest with the associated children attached, and returns the [`NodeId`] of the new node
+    #[inline]
     pub(crate) fn new_with_children(&mut self, style: FlexboxLayout, children: ChildrenVec<NodeId>) -> NodeId {
         let id = self.nodes.len();
         for child in &children {
@@ -111,6 +116,7 @@ impl Forest {
     }
 
     /// Adds a `child` node to the `parent` node
+    #[inline]
     pub(crate) fn add_child(&mut self, parent: NodeId, child: NodeId) {
         self.parents[child].push(parent);
         self.children[parent].push(child);
@@ -120,6 +126,7 @@ impl Forest {
     /// Removes all nodes and resets the data structure
     ///
     /// The capacity is retained.
+    #[inline]
     pub(crate) fn clear(&mut self) {
         self.nodes.clear();
         self.children.clear();
@@ -201,6 +208,7 @@ impl Forest {
     /// Breaks the link between the `parent` node and the `child` node
     ///
     /// The `child`'s data is not removed.
+    #[inline]
     pub(crate) fn remove_child(&mut self, parent: NodeId, child: NodeId) -> NodeId {
         let index = self.children[parent].iter().position(|n| *n == child).unwrap();
         self.remove_child_at_index(parent, index)
@@ -209,6 +217,7 @@ impl Forest {
     /// Breaks the link between the `parent` node and the n-th child node
     ///
     /// The child's data is not removed.
+    #[inline]
     pub(crate) fn remove_child_at_index(&mut self, parent: NodeId, child_index: usize) -> NodeId {
         let child = self.children[parent].remove(child_index);
         self.parents[child].retain(|p| *p != parent);
@@ -219,6 +228,7 @@ impl Forest {
     /// Marks the `node` as needing layout recalculation
     ///
     /// Any cached layout information is cleared.
+    #[inline]
     pub(crate) fn mark_dirty(&mut self, node: NodeId) {
         /// Performs a recursive depth-first search up the tree until the root node is reached
         ///
@@ -235,6 +245,7 @@ impl Forest {
     }
 
     /// Computes the layout of the `node` and its children
+    #[inline]
     pub(crate) fn compute_layout(&mut self, node: NodeId, size: Size<Option<f32>>) {
         // TODO: It's not clear why this method is distinct
         self.compute(node, size)

@@ -271,6 +271,7 @@ impl Default for Dimension {
 
 impl Dimension {
     /// Converts the given [`Dimension`] into a concrete value of points
+    #[inline]
     pub(crate) fn resolve(self, parent_dim: Option<f32>) -> Option<f32> {
         match self {
             Dimension::Points(points) => Some(points),
@@ -281,6 +282,7 @@ impl Dimension {
     }
 
     /// Is this value defined?
+    #[inline]
     pub(crate) fn is_defined(self) -> bool {
         matches!(self, Dimension::Points(_) | Dimension::Percent(_))
     }
@@ -391,6 +393,7 @@ impl Default for FlexboxLayout {
 
 impl FlexboxLayout {
     /// If the `direction` is row-oriented, the min width. Otherwise the min height
+    #[inline]
     pub(crate) fn min_main_size(&self, direction: FlexDirection) -> Dimension {
         if direction.is_row() {
             self.min_size.width
@@ -400,6 +403,7 @@ impl FlexboxLayout {
     }
 
     /// If the `direction` is row-oriented, the max width. Otherwise the max height
+    #[inline]
     pub(crate) fn max_main_size(&self, direction: FlexDirection) -> Dimension {
         if direction.is_row() {
             self.max_size.width
@@ -409,6 +413,7 @@ impl FlexboxLayout {
     }
 
     /// If the `direction` is row-oriented, the margin start. Otherwise the margin top
+    #[inline]
     pub(crate) fn main_margin_start(&self, direction: FlexDirection) -> Dimension {
         if direction.is_row() {
             self.margin.start
@@ -418,6 +423,7 @@ impl FlexboxLayout {
     }
 
     /// If the `direction` is row-oriented, the margin end. Otherwise the margin bottom
+    #[inline]
     pub(crate) fn main_margin_end(&self, direction: FlexDirection) -> Dimension {
         if direction.is_row() {
             self.margin.end
@@ -427,6 +433,7 @@ impl FlexboxLayout {
     }
 
     /// If the `direction` is row-oriented, the height. Otherwise the width
+    #[inline]
     pub(crate) fn cross_size(&self, direction: FlexDirection) -> Dimension {
         if direction.is_row() {
             self.size.height
@@ -436,6 +443,7 @@ impl FlexboxLayout {
     }
 
     /// If the `direction` is row-oriented, the min height. Otherwise the min width
+    #[inline]
     pub(crate) fn min_cross_size(&self, direction: FlexDirection) -> Dimension {
         if direction.is_row() {
             self.min_size.height
@@ -445,6 +453,7 @@ impl FlexboxLayout {
     }
 
     /// If the `direction` is row-oriented, the max height. Otherwise the max width
+    #[inline]
     pub(crate) fn max_cross_size(&self, direction: FlexDirection) -> Dimension {
         if direction.is_row() {
             self.max_size.height
@@ -454,6 +463,7 @@ impl FlexboxLayout {
     }
 
     /// If the `direction` is row-oriented, the margin top. Otherwise the margin start
+    #[inline]
     pub(crate) fn cross_margin_start(&self, direction: FlexDirection) -> Dimension {
         if direction.is_row() {
             self.margin.top
@@ -463,6 +473,7 @@ impl FlexboxLayout {
     }
 
     /// If the `direction` is row-oriented, the margin bottom. Otherwise the margin end
+    #[inline]
     pub(crate) fn cross_margin_end(&self, direction: FlexDirection) -> Dimension {
         if direction.is_row() {
             self.margin.bottom
@@ -472,6 +483,7 @@ impl FlexboxLayout {
     }
 
     /// Computes the final alignment of this item based on the parent's [`AlignItems`] and this item's [`AlignSelf`]
+    #[inline]
     pub(crate) fn align_self(&self, parent: &FlexboxLayout) -> AlignSelf {
         if self.align_self == AlignSelf::Auto {
             match parent.align_items {

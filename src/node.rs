@@ -81,18 +81,21 @@ impl Taffy {
     }
 
     /// Allocates memory for a new node, and returns a matching generated [`Node`]
+    #[inline]
     fn allocate_node(&mut self) -> Node {
         let local = self.allocator.allocate();
         Node { instance: self.id, local }
     }
 
     /// Stores a new node in the tree
+    #[inline]
     fn add_node(&mut self, node: Node, id: NodeId) {
         let _ = self.nodes_to_ids.insert(node, id);
         let _ = self.ids_to_nodes.insert(id, node);
     }
 
     /// Returns the `NodeId` of the provided node within the forest
+    #[inline]
     fn find_node(&self, node: Node) -> Result<NodeId, error::InvalidNode> {
         match self.nodes_to_ids.get(&node) {
             Some(id) => Ok(*id),
